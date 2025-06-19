@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package mvc.Controller;
 
 import mvc.View.MenuUtama;
@@ -22,25 +19,24 @@ public class ControllerMenuUtama
     public void openInputBukuForm() {
         FormInputBuku formBuku = new FormInputBuku();
         formBuku.setVisible(true);
-        frame.dispose(); // Opsional: tutup menu utama jika ingin menggantinya
+        frame.dispose(); 
     }
 
     public void openDaftarBukuForm() {
         FormDaftarBuku formDaftarBuku = new FormDaftarBuku();
         formDaftarBuku.setVisible(true);
-        frame.dispose(); // Opsional
+        frame.dispose();
     }
 
     public void openInputPeminjamanForm() {
-        // Ini membuka FormPeminjaman yang hanya untuk input ID Buku, Nama, No HP
         FormPeminjaman formPeminjaman = new FormPeminjaman();
         formPeminjaman.setVisible(true);
-        frame.dispose(); // Opsional
+        frame.dispose();
     }
 
     public void openDaftarPeminjamanForm() {
         FormDaftarPeminjaman formDaftarPeminjaman = new FormDaftarPeminjaman();
         formDaftarPeminjaman.setVisible(true);
-        frame.dispose(); // Opsional
+        frame.dispose(); 
     }
 }

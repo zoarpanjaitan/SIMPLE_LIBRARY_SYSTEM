@@ -156,6 +156,7 @@ public class FormDaftarBuku extends javax.swing.JFrame {
     private void btnKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKembaliActionPerformed
         MenuUtama menuutama = new MenuUtama();
         menuutama.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnKembaliActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -209,7 +210,6 @@ public class FormDaftarBuku extends javax.swing.JFrame {
         });
     }
     
-     // Blok Getter untuk Komponen di FormDaftarBuku
     
     public javax.swing.JButton getBtnCari() {
         return btnCari;

@@ -14,39 +14,25 @@ import mvc.Model.Peminjaman;
 public class DAOPeminjaman implements IPeminjaman {
     
     Connection connection;
-    
-    // === SQL QUERIES ===
-    // Query untuk tabel Peminjaman
     final String insert = "INSERT INTO tbl_peminjaman (id_buku, nama_peminjam, no_hp, tgl_peminjaman, status) VALUES (?, ?, ?, ?, ?);";
-    
-    // Mengubah update untuk lebih fleksibel: bisa update tgl_pengembalian, status, atau semua data peminjaman kecuali idBuku
-    // Jika ingin update semua, tambahkan kolom yang relevan
     final String update = "UPDATE tbl_peminjaman SET id_buku=?, nama_peminjam=?, no_hp=?, tgl_peminjaman=?, tgl_pengembalian=?, status=? WHERE id_peminjaman=?;";
-    
-    // Query update khusus untuk pengembalian (opsional, bisa pakai update di atas)
     final String updatePengembalian = "UPDATE tbl_peminjaman SET tgl_pengembalian=?, status=? WHERE id_peminjaman=?;";
-
     final String delete = "DELETE FROM tbl_peminjaman WHERE id_peminjaman=?;";
-    
-    // Query SELECT dengan JOIN untuk mendapatkan judul buku
     final String selectAll = "SELECT pinjam.*, buku.judul_buku " +
                               "FROM tbl_peminjaman pinjam " +
                               "INNER JOIN tbl_buku buku ON pinjam.id_buku = buku.id " +
                               "ORDER BY pinjam.id_peminjaman DESC;";
 
-    // Query untuk manajemen Stok di tabel Buku
     final String cekStok = "SELECT stok FROM tbl_buku WHERE id=?;";
     final String updateStokKurang = "UPDATE tbl_buku SET stok = stok - 1 WHERE id=?;";
     final String updateStokTambah = "UPDATE tbl_buku SET stok = stok + 1 WHERE id=?;";
 
-    // Query baru untuk SEARCH
     final String searchSQL = "SELECT pinjam.*, buku.judul_buku " +
                              "FROM tbl_peminjaman pinjam " +
                              "INNER JOIN tbl_buku buku ON pinjam.id_buku = buku.id " +
                              "WHERE pinjam.nama_peminjam LIKE ? OR buku.judul_buku LIKE ? " + // Bisa mencari berdasarkan nama peminjam ATAU judul buku
                              "ORDER BY pinjam.id_peminjaman DESC;";
     
-    // Query baru untuk getById
     final String getByIdSQL = "SELECT pinjam.*, buku.judul_buku " +
                               "FROM tbl_peminjaman pinjam " +
                               "INNER JOIN tbl_buku buku ON pinjam.id_buku = buku.id " +
@@ -61,34 +47,29 @@ public class DAOPeminjaman implements IPeminjaman {
     public void insert(Peminjaman p) {
         PreparedStatement statement = null;
         try {
-            // LANGKAH 1: Cek stok terlebih dahulu
             statement = connection.prepareStatement(cekStok);
             statement.setInt(1, p.getIdBuku());
             ResultSet rs = statement.executeQuery();
             
             if (rs.next()) {
                 int stokTersedia = rs.getInt("stok");
-                if (stokTersedia > 0) {
-                    // Stok tersedia, lanjutkan proses
-                    
-                    // LANGKAH 2: Kurangi stok di tbl_buku
+                if (stokTersedia > 0) 
+                {
                     statement = connection.prepareStatement(updateStokKurang);
                     statement.setInt(1, p.getIdBuku());
                     statement.executeUpdate();
-                    
-                    // LANGKAH 3: Masukkan data peminjaman ke tbl_peminjaman
+
                     statement = connection.prepareStatement(insert);
                     statement.setInt(1, p.getIdBuku());
                     statement.setString(2, p.getNamaPeminjam());
                     statement.setString(3, p.getNoHp());
                     statement.setDate(4, new java.sql.Date(p.getTglPeminjaman().getTime()));
-                    statement.setString(5, "Dipinjam"); // Status peminjaman
+                    statement.setString(5, "Dipinjam"); 
                     statement.executeUpdate();
                     
                     javax.swing.JOptionPane.showMessageDialog(null, "Peminjaman berhasil dicatat!");
                     
                 } else {
-                    // Jika stok habis
                     javax.swing.JOptionPane.showMessageDialog(null, "Stok buku habis, tidak bisa dipinjam.");
                 }
             } else {
@@ -105,42 +86,31 @@ public class DAOPeminjaman implements IPeminjaman {
                     statement.close();
                 }
             } catch (SQLException ex) {
-                // Abaikan
             }
         }
     }
     
-    // untuk update (INI SUDAH DIUBAH AGAR LEBIH GENERAL UNTUK EDIT DATA)
     @Override
     public void update(Peminjaman p) {
         PreparedStatement statement = null;
         try {
-            // Periksa apakah ini proses pengembalian atau update biasa
             if (p.getStatus() != null && p.getStatus().equalsIgnoreCase("Kembali")) {
-                // Jika statusnya "Kembali", berarti ini proses pengembalian
                 statement = connection.prepareStatement(updatePengembalian);
                 statement.setDate(1, new java.sql.Date(p.getTglPengembalian().getTime()));
                 statement.setString(2, "Kembali");
                 statement.setInt(3, p.getIdPeminjaman());
                 statement.executeUpdate();
-
-                // Tambah stok di tbl_buku hanya jika status sebelumnya bukan "Kembali"
-                // (untuk mencegah penambahan stok ganda jika diupdate berkali-kali)
-                // Untuk kasus ini, asumsi update selalu terjadi dari status "Dipinjam" ke "Kembali"
-                // Atau Anda bisa menambahkan kolom di DB untuk menyimpan stok_sudah_ditambah
                 statement = connection.prepareStatement(updateStokTambah);
                 statement.setInt(1, p.getIdBuku());
                 statement.executeUpdate();
                 javax.swing.JOptionPane.showMessageDialog(null, "Proses pengembalian berhasil!");
 
             } else {
-                // Ini adalah update data peminjaman biasa (misalnya edit nama peminjam, dll.)
                 statement = connection.prepareStatement(update);
                 statement.setInt(1, p.getIdBuku());
                 statement.setString(2, p.getNamaPeminjam());
                 statement.setString(3, p.getNoHp());
                 statement.setDate(4, new java.sql.Date(p.getTglPeminjaman().getTime()));
-                // Jika tglPengembalian null, set sebagai NULL di database
                 statement.setDate(5, p.getTglPengembalian() != null ? new java.sql.Date(p.getTglPengembalian().getTime()) : null);
                 statement.setString(6, p.getStatus());
                 statement.setInt(7, p.getIdPeminjaman());
@@ -154,23 +124,14 @@ public class DAOPeminjaman implements IPeminjaman {
             try {
                 if (statement != null) statement.close();
             } catch (SQLException ex) {
-                // Abaikan
             }
         }
     }
     
-    // untuk delete
     @Override
     public void delete(int idPeminjaman) {    
         PreparedStatement statement = null;
         try {
-            // OPTIONAL: Sebelum delete, Anda mungkin ingin mengembalikan stok buku
-            // Namun, jika delete hanya untuk "riwayat" yang sudah kembali, tidak perlu.
-            // Jika delete peminjaman yang masih "Dipinjam", maka stok harus dikembalikan.
-            // Ini adalah keputusan desain Anda. Untuk sementara, saya tidak menambahkan logika pengembalian stok di sini
-            // karena delete ini di DAOInterface tidak menerima objek Peminjaman (hanya ID).
-            // Jika Anda perlu mengembalikan stok, Anda harus mendapatkan Peminjaman.idBuku dulu.
-
             statement = connection.prepareStatement(delete);
             statement.setInt(1, idPeminjaman);
             statement.executeUpdate();
@@ -182,19 +143,18 @@ public class DAOPeminjaman implements IPeminjaman {
             try {
                 if (statement != null) statement.close();
             } catch (SQLException ex) {
-                // ignore
+ 
             }
         }
     }
     
-    // untuk ambil semua
     public List<Peminjaman> getAll() {
         List<Peminjaman> listPeminjaman = new ArrayList<>();
-        Statement st = null; // Ganti PreparedStatement dengan Statement untuk query tanpa parameter
+        Statement st = null; 
         ResultSet rs = null;
         try {
             st = connection.createStatement();
-            rs = st.executeQuery(selectAll); // Gunakan selectAll
+            rs = st.executeQuery(selectAll); 
             while (rs.next()) {
                 Peminjaman p = new Peminjaman();
                 p.setIdPeminjaman(rs.getInt("id_peminjaman"));
@@ -214,13 +174,10 @@ public class DAOPeminjaman implements IPeminjaman {
                 if (rs != null) rs.close();
                 if (st != null) st.close();
             } catch (SQLException ex) {
-                // ignore
             }
         }
         return listPeminjaman;
     }
-
-    // --- IMPLEMENTASI METHOD BARU ---
 
     @Override
     public List<Peminjaman> search(String keyword) {
@@ -230,7 +187,7 @@ public class DAOPeminjaman implements IPeminjaman {
         try {
             statement = connection.prepareStatement(searchSQL);
             statement.setString(1, "%" + keyword + "%");
-            statement.setString(2, "%" + keyword + "%"); // Untuk mencari di judul_buku juga
+            statement.setString(2, "%" + keyword + "%"); 
             rs = statement.executeQuery();
             while (rs.next()) {
                 Peminjaman p = new Peminjaman();
@@ -251,7 +208,6 @@ public class DAOPeminjaman implements IPeminjaman {
                 if (rs != null) rs.close();
                 if (statement != null) statement.close();
             } catch (SQLException ex) {
-                // ignore
             }
         }
         return listPeminjaman;
@@ -284,7 +240,6 @@ public class DAOPeminjaman implements IPeminjaman {
                 if (rs != null) rs.close();
                 if (statement != null) statement.close();
             } catch (SQLException ex) {
-                // ignore
             }
         }
         return peminjaman;

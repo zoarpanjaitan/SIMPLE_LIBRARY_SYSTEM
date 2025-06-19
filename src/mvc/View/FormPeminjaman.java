@@ -169,8 +169,7 @@ public class FormPeminjaman extends javax.swing.JFrame {
     public javax.swing.JButton getButtonPinjam() {
         return btnSimpan;
     }
-    
-    // Metode untuk membersihkan form setelah disimpan
+   
     public void clearForm() {
         if (txtIDBuku != null) { txtIDBuku.setText(""); }
         if (txtNama != null) { txtNama.setText(""); }

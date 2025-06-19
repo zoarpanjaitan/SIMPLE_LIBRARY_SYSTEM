@@ -220,8 +220,7 @@ public class FormInputBuku extends javax.swing.JFrame {
             }
         });
     }
-    
-    // Blok Getter untuk Komponen di FormInputBuku
+   
 
     public javax.swing.JButton getBtnBatal() {
         return btnBatal;

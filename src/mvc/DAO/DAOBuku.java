@@ -13,10 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import mcv.DAOInterface.IBuku;
 
-/**
- *
- * @author (Namamu)
- */
 public class DAOBuku implements IBuku 
 {
     
@@ -31,7 +27,6 @@ public class DAOBuku implements IBuku
         connection = Koneksi.getKoneksi(); // 
     }
     
-    // METHOD-METHOD LAINNYA AKAN KITA TAMBAHKAN DI SINI
 
     @Override
     public void insert(Buku b) 
@@ -47,21 +42,19 @@ public class DAOBuku implements IBuku
             statement.setInt(6, b.getStok());
             statement.executeUpdate();
 
-            // Kode ini untuk mengambil ID yang baru saja di-generate oleh database
             ResultSet rs = statement.getGeneratedKeys();
             while (rs.next()) {
                 b.setId(rs.getInt(1));
             } 
         } catch (SQLException ex) {
             System.out.println("Gagal Input");
-            ex.printStackTrace(); // Tampilkan detail error
+            ex.printStackTrace(); 
         } finally {
             try {
                 if (statement != null) {
                     statement.close();
                 }
             } catch (SQLException ex) {
-                // Abaikan
             }
         }
     }
@@ -78,7 +71,7 @@ public class DAOBuku implements IBuku
             statement.setInt(4, b.getTahun_terbit());
             statement.setString(5, b.getKategori());
             statement.setInt(6, b.getStok());
-            statement.setInt(7, b.getId()); // Ini untuk mengisi ID di klausa WHERE
+            statement.setInt(7, b.getId()); 
             statement.executeUpdate();
 
         } catch (SQLException ex) {
@@ -90,7 +83,6 @@ public class DAOBuku implements IBuku
                     statement.close();
                 }
             } catch (SQLException ex) {
-                // Abaikan
             }
         }
     }
@@ -112,7 +104,6 @@ public class DAOBuku implements IBuku
                     statement.close();
                 }
             } catch (SQLException ex) {
-                // Abaikan
             }
         }
     }
@@ -123,12 +114,10 @@ public class DAOBuku implements IBuku
         try {
             lb = new ArrayList<Buku>();
             Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(select); // Menjalankan query "SELECT * FROM tbl_buku;"
+            ResultSet rs = st.executeQuery(select); 
             while (rs.next()) {
-                // Membuat objek buku baru untuk setiap baris data
                 Buku b = new Buku();
 
-                // Mengisi objek buku dengan data dari database
                 b.setId(rs.getInt("id"));
                 b.setJudul_buku(rs.getString("judul_buku"));
                 b.setPengarang(rs.getString("pengarang"));
@@ -137,7 +126,6 @@ public class DAOBuku implements IBuku
                 b.setKategori(rs.getString("kategori"));
                 b.setStok(rs.getInt("stok"));
 
-                // Menambahkan objek buku ke dalam list
                 lb.add(b);
             }
         } catch (SQLException ex) {
@@ -153,7 +141,6 @@ public class DAOBuku implements IBuku
             lb = new ArrayList<Buku>();
             PreparedStatement st = connection.prepareStatement(cariJudul);
 
-            // Mengatur parameter untuk klausa 'LIKE' dengan wildcard '%'
             st.setString(1, "%" + judul + "%");
 
             ResultSet rs = st.executeQuery();

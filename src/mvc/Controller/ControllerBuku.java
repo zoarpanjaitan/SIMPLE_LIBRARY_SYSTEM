@@ -15,14 +15,12 @@ public class ControllerBuku {
     IBuku implBuku;
     List<Buku> listBuku;
 
-    // Konstruktor akan menerima frame utama sebagai parameter
     public ControllerBuku(FormDaftarBuku frame) {
         this.frameDaftar = frame;
         implBuku = new DAOBuku();
         listBuku = implBuku.getAll();
     }
     
-    // Method untuk menampilkan semua data ke tabel
     public void isiTabel() 
     {
         listBuku = implBuku.getAll();
@@ -40,7 +38,7 @@ public class ControllerBuku {
         frameInput.getCmbBoxKategori().setSelectedItem("Fiksi");
         frameInput.getTxtStok().setText("");
     }
-    // Method untuk mengambil data dari frame input dan menyimpan ke database
+
     public void insert() 
     {
         if (!frameInput.getTxtJudulBuku().getText().trim().isEmpty()) {
@@ -61,7 +59,7 @@ public class ControllerBuku {
             JOptionPane.showMessageDialog(frameInput, "Judul Buku Tidak Boleh Kosong");
         }
     }
-    // Method untuk menampilkan frame input
+
     public void showInputForm() {
         frameInput = new FormInputBuku();
         reset();
@@ -76,10 +74,9 @@ public class ControllerBuku {
         });
     }
     
-    // Method untuk menampilkan data yang dipilih dari tabel ke form input
+
     public void isiField(int row) 
     {
-        // Mengisi textfield di frameInput dengan data dari listBuku sesuai baris yang dipilih
         frameInput.getTxtID().setText(listBuku.get(row).getId().toString());
         frameInput.getTxtJudulBuku().setText(listBuku.get(row).getJudul_buku());
         frameInput.getTxtPengarang().setText(listBuku.get(row).getPengarang());
@@ -89,7 +86,6 @@ public class ControllerBuku {
         frameInput.getTxtStok().setText(listBuku.get(row).getStok().toString());
     }
     
-    // Method untuk mengambil data yang diubah dari form input dan meng-update database
     public void update() 
     {
         if (!frameInput.getTxtID().getText().trim().isEmpty()) {
@@ -112,7 +108,6 @@ public class ControllerBuku {
         }
     }
     
-    // Method untuk menampilkan frame input dalam mode update
     public void showUpdateForm() 
     {
         int selectedRow = frameDaftar.getTblDaftarBuku().getSelectedRow();
@@ -136,26 +131,18 @@ public class ControllerBuku {
         }
     }
     
-    // Method untuk menghapus data yang dipilih
     public void delete() 
     {
         int selectedRow = frameDaftar.getTblDaftarBuku().getSelectedRow();
         
-        // Cek apakah ada baris yang dipilih
         if (selectedRow != -1) {
-            // Tampilkan dialog konfirmasi sebelum menghapus
-            int confirm = javax.swing.JOptionPane.showConfirmDialog(frameDaftar, 
-                                                                    "Apakah Anda yakin ingin menghapus data ini?", 
-                                                                    "Konfirmasi Hapus", 
-                                                                    javax.swing.JOptionPane.YES_NO_OPTION);
+            int confirm = javax.swing.JOptionPane.showConfirmDialog(frameDaftar, "Apakah Anda yakin ingin menghapus data ini?",  "Konfirmasi Hapus", javax.swing.JOptionPane.YES_NO_OPTION);
             
-            if (confirm == javax.swing.JOptionPane.YES_OPTION) {
-                // Ambil ID dari baris yang dipilih
+            if (confirm == javax.swing.JOptionPane.YES_OPTION) 
+            {
                 int id = listBuku.get(selectedRow).getId();
-                // Panggil DAO untuk menghapus data
                 implBuku.delete(id);
                 javax.swing.JOptionPane.showMessageDialog(null, "Hapus Data Sukses");
-                // Refresh tabel
                 isiTabel();
             }
         } else {
@@ -163,30 +150,21 @@ public class ControllerBuku {
         }
     }
     
-     // Method untuk mengisi tabel berdasarkan hasil pencarian
     public void isiTabelCari() 
     {
-        // Mengambil teks pencarian dari textfield di frameDaftar
         String cari = frameDaftar.getTxtCariJudulBuku().getText();
-        // Memanggil method DAO untuk mencari data berdasarkan judul
         listBuku = implBuku.getCariJudul(cari);
-        // Membuat tabel model baru dengan data hasil pencarian
         TabelModelBuku tmb = new TabelModelBuku(listBuku);
-        // Mengatur model tabel di frameDaftar
         frameDaftar.getTblDaftarBuku().setModel(tmb);
     }
     
-    // Method yang akan dipanggil saat tombol "Cari" di-klik
     public void cariJudul() 
     {
-        // Cek apakah field pencarian tidak kosong
         if (!frameDaftar.getTxtCariJudulBuku().getText().trim().isEmpty()) {
-            // Jika tidak kosong, panggil method untuk mengisi tabel dengan hasil pencarian
             isiTabelCari();
         } else {
-            // Jika kosong, tampilkan pesan atau muat ulang semua data
             javax.swing.JOptionPane.showMessageDialog(frameDaftar, "Silakan masukkan judul yang ingin dicari.");
-            isiTabel(); // Muat ulang semua data jika field kosong
+            isiTabel(); 
         }
     }
 }

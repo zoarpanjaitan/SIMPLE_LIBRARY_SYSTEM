@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package mvc.View;
 
 import mvc.Controller.ControllerMenuUtama;
@@ -18,7 +14,7 @@ public class MenuUtama extends javax.swing.JFrame {
         addEventHandlers();
     }
     
-    // Metode untuk menambahkan event listeners ke tombol-tombol
+  
     private void addEventHandlers() {
         if (btnInputBuku != null) {
             btnInputBuku.addActionListener(new java.awt.event.ActionListener() {
@@ -27,10 +23,10 @@ public class MenuUtama extends javax.swing.JFrame {
                 }
             });
         }
-        if (btnPeminjaman != null) { // Menggunakan nama tombol Anda: btnPeminjaman
+        if (btnPeminjaman != null) {
             btnPeminjaman.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    controller.openInputPeminjamanForm(); // Ini akan membuka FormPeminjaman (input)
+                    controller.openInputPeminjamanForm();
                 }
             });
         }
