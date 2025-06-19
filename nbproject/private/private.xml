@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mvc/Koneksi/Koneksi.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mvc/Koneksi/TestKoneksi.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mvc/Model/Buku.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mvc/Model/TabelModelBuku.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mcv/DAOInterface/IBuku.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mvc/View/FormInputBuku.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mvc/DAO/DAOBuku.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mvc/View/FormDaftarBuku.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mvc/Controller/ControllerBuku.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mvc/Model/Admin.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mcv/DAOInterface/IAdmin.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mvc/DAO/DAOAdmin.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mvc/View/FormAdmin.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mvc/Controller/ControllerLogin.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mvc/Model/Peminjaman.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mcv/DAOInterface/IPeminjaman.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mvc/DAO/DAOPeminjaman.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mvc/View/FormPeminjaman.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mvc/View/FormDaftarPeminjaman.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mvc/Controller/ControllerInputPeminjaman.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mvc/Controller/ControllerListPeminjaman.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mvc/View/MenuUtama.java</file>
+            <file>file:/C:/Users/HP/Documents/NetBeansProjects/SIMPLE_SISTEM_PERPUSTAKAAN/src/mvc/Controller/ControllerMenuUtama.java</file>
+        </group>
+    </open-files>
+</project-private>
